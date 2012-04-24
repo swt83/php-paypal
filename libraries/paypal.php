@@ -32,7 +32,7 @@ class Paypal
 			'USER' => $credentials['username'],
 			'PWD' => $credentials['password'],
 			'SIGNATURE' => $credentials['signature'],
-			'METHOD' => self::camelize($method),
+			'METHOD' => self::camelcase($method),
 		);
 		
 		// build post data
@@ -68,7 +68,7 @@ class Paypal
 		}
 	}
 	
-	private static function camelize($str)
+	private static function camelcase($str)
 	{
 		return ucfirst(preg_replace('/(^|_)(.)/e', "strtoupper('\\2')", strval($str)));
 	}
