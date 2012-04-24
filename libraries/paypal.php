@@ -1,9 +1,9 @@
 <?php
 
 /**
- * A LaravelPHP package for working with PayPal.
+ * A LaravelPHP package for working w/ PayPal.
  *
- * @package    Paypal
+ * @package    PayPal
  * @author     Scott Travis <scott.w.travis@gmail.com>
  * @link       http://github.com/swt83/laravel-paypal
  * @license    MIT License
