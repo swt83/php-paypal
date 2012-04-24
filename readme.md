@@ -4,7 +4,13 @@ This package is a simple wrapper for working w/ the [PayPal API](http://coding.s
 
 ## Install ##
 
-Copy the config file to ``application/config/paypal.php`` and input the proper information.
+In ``application/bundles.php`` add:
+
+```php
+'paypal' => array('auto' => true),
+```
+
+Copy the sample config file to ``application/config/paypal.php`` and input the proper information.
 
 ## Usage ##
 
@@ -46,4 +52,4 @@ Just make sure you pass all the required fields.
 
 ## Limitations ##
 
-The package does not handle IPN messages.  I am holding that for a forthcoming IPN handler package.
+The package does not handle IPN messages.
