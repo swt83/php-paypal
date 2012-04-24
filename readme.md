@@ -1,6 +1,6 @@
 # PayPal for LaravelPHP #
 
-This package is a simple wrapper for working w/ the Paypal API.
+This package is a simple wrapper for working w/ the [PayPal API](http://coding.smashingmagazine.com/2011/09/05/getting-started-with-the-paypal-api/).
 
 ## Install ##
 
