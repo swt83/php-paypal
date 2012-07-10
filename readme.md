@@ -48,8 +48,26 @@ $response = Paypal::do_direct_payment(array(
 ));
 ```
 
-Just make sure you pass all the required fields.
+Read the [PayPal API](http://coding.smashingmagazine.com/2011/09/05/getting-started-with-the-paypal-api/) docs for what kind of response objects to except.
 
-## Limitations ##
+## Listener ##
 
-The package does not handle IPN messages.
+You can accept and verify IPN communications.  Just setup a route where you'll receive the IPN post data and run the ``ipn()`` method:
+
+```
+Route::post('ipn', function() {
+
+	// if data verifies...
+	if (Paypal::ipn()) // method returns true or false, success or failure
+	{
+		// capture data
+		$data = Input::all();
+		
+		// do something w/ data
+		// ...
+	}
+	
+});
+```
+
+Keeping it simple.

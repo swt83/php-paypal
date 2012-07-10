@@ -2,7 +2,7 @@
 
 return array(
 
-	'sandbox_mode' => true,
+	'production_mode' => false,
 	
 	// production credentials
 	'production' => array(
@@ -17,4 +17,5 @@ return array(
 		'password' => '',
 		'signature' => '',
 	),
+	
 );
