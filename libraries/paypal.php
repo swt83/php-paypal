@@ -86,14 +86,14 @@ class Paypal
 		if (Config::get('paypal.production_mode'))
 		{
 			// use production endpoint
-			$endpoint = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+			$endpoint = 'https://www.paypal.com/cgi-bin/webscr';
 		}
 		
 		// if sandbox mode...
 		else 
 		{
 			// use sandbox endpoint
-			$endpoint = 'https://www.paypal.com/cgi-bin/webscr';
+			$endpoint = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 		}
 		
 		// build response
