@@ -1,22 +1,20 @@
 {
-    "name": "vendor/package",
-    "description": "",
+    "name": "travis/paypal",
+    "description": "A PHP package for working w/ the Paypal API.",
+    "homepage": "https://github.com/swt83/php-paypal",
+    "license": "MIT",
     "authors": [
         {
             "name": "Scott Travis",
-            "email": "scott@swt83.com"
+            "email": "scott.w.travis@gmail.com"
         }
     ],
     "require": {
-        "php": ">=5.3.0",
-        "illuminate/support": "4.0.*"
+        "php": ">=5.3.0"
     },
     "autoload": {
-        "classmap": [
-            "src/migrations"
-        ],
         "psr-0": {
-            "Vendor\\Package\\": "src/"
+            "Travis\\": "src/"
         }
     },
     "minimum-stability": "dev"
