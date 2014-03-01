@@ -13,9 +13,11 @@ class Paypal {
      */
     public static function __callStatic($method, $args)
     {
+        // capture credentials
+        $credentials = isset($args[0]) ? $args[0] : array();
+
         // capture arguments
-        $credentials = isset($args) ? $args[0] : array();
-        $args = isset($args) ? $args[1] : array();
+        $args = isset($args[1]) ? $args[1] : array();
 
         // catch error...
         if (!isset($credentials))
@@ -33,7 +35,7 @@ class Paypal {
             }
         }
 
-        // build credentials
+        // build prep
         $params = array(
             'VERSION' => '74.0',
             'USER' => $credentials['username'],
@@ -86,26 +88,24 @@ class Paypal {
     /**
      * Automatically verify Paypal IPN communications.
      *
-     * @param   array   $args
+     * @param   array   $input
+     * @param   array   $options
      * @return  boolean
      */
-    public static function ipn($args = array())
+    public static function ipn($input = array(), $options = array())
     {
-        // only accept post data
-        if (\Request::method() !== 'POST') return false;
-
         // set endpoint
         $endpoint = 'https://www.paypal.com/cgi-bin/webscr';
-        if (isset($args['sandbox']))
+        if (isset($options['sandbox']))
         {
-            if ($args['sandbox'])
+            if ($options['sandbox'])
             {
                 $endpoint = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
             }
         }
 
         // build response
-        $fields = http_build_query(array('cmd' => '_notify-validate') + \Input::all());
+        $fields = http_build_query(array('cmd' => '_notify-validate') + $input);
 
         // curl request
         $ch = curl_init();
@@ -139,7 +139,7 @@ class Paypal {
             curl_close($ch);
 
             // if success...
-            if ($code === 200 and $response === 'VERIFIED')
+            if ($code == 200 and $response == 'VERIFIED')
             {
                 return true;
             }

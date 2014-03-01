@@ -16,12 +16,12 @@ $credentials = array(
     'username' => '',
     'password' => '',
     'signature' => '',
-    'sandbox' => true // optional
+    'sandbox' => true // default is false
 );
 
 $response = Travis\Paypal::do_direct_payment($credentials, array(
     // ip address
-    'IPADDRESS' => Request::ip(),
+    'IPADDRESS' => '',
 
     // credit card
     'CREDITCARDTYPE' => '',
@@ -54,20 +54,29 @@ Read the [PayPal API](http://coding.smashingmagazine.com/2011/09/05/getting-star
 
 ## Listener
 
-You can accept and verify IPN communications.  Just setup a route where you'll receive the IPN post data and run the ``ipn()`` method.  Use ``ipn(array('sandbox' => true))`` for testing in sandbox mode.
+You can accept and verify IPN communications.  Just setup a route where you'll receive the IPN post data and run the ``ipn()`` method.
+
+A Laravel example:
 
 ```php
-Route::post('ipn', function() {
+Route::post('ipn', function()
+{
+    // capture input
+    $input = Input::all();
+
+    // submit back to paypal
+    $verify = Travis\Paypal::ipn($input);
+
+    // For sandbox mode, add an addition argument:
+    // $verify = Travis\Paypal::ipn($input, array('sandbox' => true));
 
     // if data verifies...
-    if (Paypal::ipn()) // method returns true or false, success or failure
+    if ($verify)
     {
-        // capture data
-        $data = Input::all();
-
         // do something w/ data
         // ...
     }
-
 });
 ```
+
+Note that the IPN communication is always a POST request to your server.
