@@ -41,6 +41,7 @@ class Paypal {
             'USER' => $credentials['username'],
             'PWD' => $credentials['password'],
             'SIGNATURE' => $credentials['signature'],
+            'BUTTONSOURCE' => 'AngellEYE_SP_swt83_PHP',
             'METHOD' => static::camelcase($method),
         );
 
