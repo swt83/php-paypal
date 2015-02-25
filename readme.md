@@ -16,7 +16,7 @@ $credentials = array(
     'username' => '',
     'password' => '',
     'signature' => '',
-    'sandbox' => true // default is false
+    'is_sandbox' => true // default is false
 );
 
 $response = Travis\Paypal::do_direct_payment($credentials, array(
@@ -68,7 +68,7 @@ Route::post('ipn', function()
     $verify = Travis\Paypal::ipn($input);
 
     // For sandbox mode, add an addition argument:
-    // $verify = Travis\Paypal::ipn($input, array('sandbox' => true));
+    // $verify = Travis\Paypal::ipn($input, array('is_sandbox' => true));
 
     // if data verifies...
     if ($verify)

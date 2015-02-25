@@ -25,12 +25,17 @@ class Paypal {
             trigger_error('No credentials provided.');
         }
 
-        // set endpoint
+        // set default endpoint
         $endpoint = 'https://api-3t.paypal.com/nvp';
-        if (isset($credentials['sandbox']))
+
+        // if sandbox defined...
+        if (isset($credentials['sandbox'])) $credentials['is_sandbox'] = $credentials['sandbox']; // backwards compatibility
+        if (isset($credentials['is_sandbox']))
         {
-            if ($credentials['sandbox'])
+            // if sandbox mode...
+            if ($credentials['is_sandbox'])
             {
+                // change endpoint
                 $endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
             }
         }
@@ -41,7 +46,7 @@ class Paypal {
             'USER' => $credentials['username'],
             'PWD' => $credentials['password'],
             'SIGNATURE' => $credentials['signature'],
-            'METHOD' => static::camelcase($method),
+            'METHOD' => static::str2camelcase($method),
         );
 
         // build post data
@@ -96,9 +101,10 @@ class Paypal {
     {
         // set endpoint
         $endpoint = 'https://www.paypal.com/cgi-bin/webscr';
-        if (isset($options['sandbox']))
+        if (isset($options['sandbox'])) $options['is_sandbox'] = $options['sandbox']; // backwards compatibility
+        if (isset($options['is_sandbox']))
         {
-            if ($options['sandbox'])
+            if ($options['is_sandbox'])
             {
                 $endpoint = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
             }
@@ -158,9 +164,16 @@ class Paypal {
      * @param   string  $str
      * @return  string
      */
-    protected static function camelcase($str)
+    protected static function str2camelcase($str)
     {
-        return ucfirst(preg_replace('/(^|_)(.)/e', "strtoupper('\\2')", strval($str)));
+        // fix
+        $new_str = preg_replace_callback('/(^|_)(.)/', function($matches)
+        {
+            return strtoupper($matches[2]);
+        }, strval($str));
+
+        // return
+        return ucfirst($new_str);
     }
 
 }
